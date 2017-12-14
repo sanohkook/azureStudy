@@ -40,7 +40,7 @@
         }
     },
     "variables": {
-        "netRGName":"minschoNetRG",
+        "netRGName":"sanohNRG01",
         "subscriptionId":"[subscription().subscriptionId]"
     },
     "resources": [

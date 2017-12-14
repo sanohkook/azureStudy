@@ -19,7 +19,7 @@
         }
     },
     "variables": {
-        "repoUri" : "https://raw.githubusercontent.com/msjo66/azureStudy/master/homework01/02VMs/"
+        "repoUri" : "https://raw.githubusercontent.com/sanohkook/azureStudy/master/homework01/02VMs/"
     },
     "resources": [
         {
