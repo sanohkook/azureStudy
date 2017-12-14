@@ -1,8 +1,0 @@
----
-- hosts: all
-  tasks:
-  - name: nginx 웹서버 설치
-    yum:
-      name: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
-      state: present
-    become: true

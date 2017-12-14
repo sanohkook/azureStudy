@@ -1,1 +1,0 @@
-sh 00.terraform.sh -t minschoTfmRG01 -n minschoNetRG -i vm0nic -v vm0 -u minsoojo

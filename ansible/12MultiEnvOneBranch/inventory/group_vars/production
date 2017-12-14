@@ -1,5 +1,0 @@
----
-env: production
-domain: prod.ebaykorea.com
-db_url: db.prod.ebaykorea.com
-db_pass: prod_password

@@ -1,5 +1,0 @@
----
-env: staging
-domain: stage.cloudapp.azure.com
-db_url: db.stage.koreacentral.cloudapp.azure.com
-db_pass: stage_password

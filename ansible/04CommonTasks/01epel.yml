@@ -1,8 +1,0 @@
----
-- hosts: all
-  tasks:
-    - name: "EPEL 설치"
-      yum:
-        name: epel-release
-        state: present
-      become: true

@@ -1,8 +1,0 @@
-#cloud-config
-package_upgrade: true
-packages:
-  - mysql-server-5.7
-  - libmysqlclient-dev
-  - mysql-client
-runcmd:
-  - service mysql start

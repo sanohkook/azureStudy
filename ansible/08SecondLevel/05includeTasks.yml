@@ -1,7 +1,0 @@
----
-- hosts: ip0*
-#  vars:
-#  - var1: value1
-  tasks:
-    # 변수를 이렇게 넘겨줄 수 있다.
-    - include_tasks: tasks/07motd.yml var1='value1'

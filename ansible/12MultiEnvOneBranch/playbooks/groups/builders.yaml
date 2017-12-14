@@ -1,5 +1,0 @@
----
-- hosts: builders
-  roles:
-  - common
-  - builder

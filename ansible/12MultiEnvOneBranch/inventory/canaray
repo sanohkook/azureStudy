@@ -1,9 +1,0 @@
-[web-main]
-ws[00:94].fale.io
-
-[web-canary]
-ws[95:99].fale.io
-
-[web:children]
-web-main
-web-canary

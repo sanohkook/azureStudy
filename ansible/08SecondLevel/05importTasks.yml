@@ -1,7 +1,0 @@
----
-- hosts: ip0*
-  vars:
-  - var1: value1
-  tasks:
-    # 07motd.yml에 보면 변수 var1이 사용되고 있다. static import에서는 variable을 미리 정해야 함.
-    - import_tasks: tasks/07motd.yml

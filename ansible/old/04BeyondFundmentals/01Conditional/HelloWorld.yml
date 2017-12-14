@@ -1,7 +1,0 @@
-# Reboot Debian Flavored Linux Systems using the WHEN operator 
----
-- hosts: all
-  tasks:
-  - name: "Reboot all Debian flavored Linux systems"
-    command: /sbin/reboot -t now
-    when: ansible_os_family == "RedHat"
