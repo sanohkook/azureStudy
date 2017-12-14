@@ -22,7 +22,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.0.0.0/16",
+                        "10.100.0.0/16",
 			            "192.168.0.0/16"
                     ]
                 },
@@ -39,7 +39,7 @@
                     {
                         "name": "devDBSubnet01",
                         "properties": {
-                            "addressPrefix": "10.0.0.0/24",
+                            "addressPrefix": "10.100.0.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'DefaultNSG')]"
                             }
@@ -48,7 +48,7 @@
                     {
                         "name": "devWebSubnet01",
                         "properties": {
-                            "addressPrefix": "10.0.1.0/24",
+                            "addressPrefix": "10.100.1.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'DefaultNSG')]"
                             }

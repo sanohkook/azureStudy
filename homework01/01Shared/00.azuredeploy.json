@@ -10,12 +10,12 @@
       }
     },
     "variables": {
-        "repoUri" : "https://raw.githubusercontent.com/msjo66/azureStudy/master/homework01/01Shared/"
+        "repoUri" : "https://raw.githubusercontent.com/sanohkook/azureStudy/master/homework01/01Shared/"
     },
     "resources": [
         {
             "apiVersion": "2017-05-10", 
-            "name": "minschoNet01", 
+            "name": "sanohNet01", 
             "type": "Microsoft.Resources/deployments", 
             "properties": { 
               "mode": "Incremental", 
@@ -47,7 +47,7 @@
               } 
             },
             "dependsOn": [
-                "minschoNet01"
+                "sanohNet01"
             ]
         },
         {
@@ -68,7 +68,7 @@
               } 
             },
             "dependsOn": [
-                "minschoNet01"
+                "sanohNet01"
             ]
         },
         {
@@ -89,7 +89,7 @@
               } 
             },
             "dependsOn": [
-                "minschoNet01"
+                "sanohNet01"
             ]
         }
     ]
