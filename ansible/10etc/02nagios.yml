@@ -1,0 +1,25 @@
+- hosts: ip0* 
+  tasks: 
+    - name: Nagios에게 ip0에 대해서 black out시키기 
+      nagios: 
+        action: disable_alerts 
+        service: httpd 
+        host: '{{ inventory_hostname }}' 
+      delegate_to: nagios.ebaykorea.com 
+    - name: Apache 내리기 
+      service: 
+        name: httpd 
+        state: stopped 
+    - name: 5분정도 작업 
+      pause: 
+        minutes: 5 
+    - name: Apache 살리기
+      service: 
+        name: httpd 
+        state: stopped 
+    - name: Nagios 모니터링 다시 시작
+      nagios: 
+        action: enable_alerts 
+        service: httpd 
+        host: '{{ inventory_hostname }}' 
+      delegate_to: nagios.ebaykorea.com 

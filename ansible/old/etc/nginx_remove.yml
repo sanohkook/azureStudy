@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: nginx 웹서버 설치
+    yum:
+      name: nginx-release-centos.noarch
+      state: removed
+    become: true

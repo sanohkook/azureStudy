@@ -1,0 +1,10 @@
+# File name : HelloDevOpsWorld.yml
+---
+- hosts: ip0*
+  tasks:
+  - name: "Fact에서 가져온 것.."
+    debug:
+      msg: '{{ansible_cmdline.root}} {{ ansible_distribution_version }}'
+  - name: "Input Parameter로 받은것"
+    debug:
+      msg: '{{ param1 }}'

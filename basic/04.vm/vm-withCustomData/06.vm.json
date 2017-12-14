@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vm_name": {
+            "type": "string"
+        },
+        "os_image_reference": {
+            "defaultValue": {
+                    "publisher": "Canonical",
+                    "offer": "UbuntuServer",
+                    "sku": "16.04-LTS",
+                    "version": "latest"
+            },
+            "type": "object"
+        },
+        "os_type": {
+            "defaultValue": "linux",
+            "type": "string"
+        },
+        "os_storage_type": {
+            "defaultValue": "Premium_LRS",
+            "type": "string"
+        },
+        "os_disk_size" : {
+            "defaultValue": 30,
+            "type": "int"
+        },
+        "adminUserId" : {
+            "type": "string"
+        },
+        "sshKeyData" : {
+            "type": "string"
+        },
+        "nic_name": {
+            "type": "string"
+        },
+        "customData": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "테스트용",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vm_name')]",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS1_v2"
+                },
+                "storageProfile": {
+                    "imageReference": "[parameters('os_image_reference')]",
+                    "osDisk": {
+                        "osType": "[parameters('os_type')]",
+                        "name": "[concat(parameters('vm_name'),'_OsDisk1')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('os_storage_type')]"
+                        },
+                        "diskSizeGB": "[parameters('os_disk_size')]"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('vm_name')]",
+                    "adminUsername": "[parameters('adminUserId')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/',parameters('adminUserId'),'/.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('sshKeyData')]"
+                                }
+                            ]
+                        }
+                    },
+                    "customData": "[parameters('customData')]",
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('nic_name'))]"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

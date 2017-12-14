@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "adminUserId": {
+        "type": "string"
+      },
+      "vaultResourceGroup" : {
+        "type": "string"
+      },
+      "vaultName" : {
+        "type": "string"
+      },
+      "secretName" : {
+        "type": "string"
+      },
+      "scalesetName": {
+        "type": "string"
+      },
+      "imgRG": {
+        "type": "string"
+      },
+      "imgName": {
+          "type": "string"
+      },
+      "netRGName": {
+          "type": "string"
+      },
+      "nicName": {
+          "type": "string"
+      },
+      "vnetName": {
+          "type": "string"
+      },
+      "subnetName": {
+          "type": "string"
+      },
+      "scalesetDnsName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+        "repoUri" : "https://raw.githubusercontent.com/msjo66/azureStudy/master/ansible/06MultiHosts/01ScaleSet/"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10", 
+            "name": "myScleSet", 
+            "type": "Microsoft.Resources/deployments", 
+            "properties": { 
+              "mode": "Incremental", 
+              "templateLink": {
+                "uri": "[concat(variables('repoUri'),'02.scalesetByImage.json')]",
+                "contentVersion": "1.0.0.0"
+              }, 
+              "parameters": { 
+                "scalesetName":{"value": "[parameters('scalesetName')]"},
+                "adminUserId":{"value": "[parameters('adminUserId')]"},
+                "sshKeyData":{
+                  "reference" : {
+                    "keyVault" : {
+                        "id": "[resourceId(subscription().subscriptionId,  parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                    },
+                    "secretName": "[parameters('secretName')]"
+                  }
+                },
+                "imgRG":{"value": "[parameters('imgRG')]"},
+                "imgName":{"value": "[parameters('imgName')]"},
+                "netRGName":{"value": "[parameters('netRGName')]"},
+                "nicName":{"value": "[parameters('nicName')]"},
+                "vnetName":{"value": "[parameters('vnetName')]"},
+                "subnetName":{"value": "[parameters('subnetName')]"},
+                "scalesetDnsName":{"value": "[parameters('scalesetDnsName')]"}
+              } 
+            }
+        }
+    ]
+}

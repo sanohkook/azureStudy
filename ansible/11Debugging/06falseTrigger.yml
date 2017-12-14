@@ -1,0 +1,40 @@
+---
+- hosts: ip0*
+  tasks: 
+    - name: "JDK 설치할지 말지 파라미터" 
+      fail: msg='install_jdk 파라미터를 설정해야 합니다.'
+      when: install_jdk is not defined
+    - name : "check jdk"
+      command: rpm -q java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64
+      register: checkJDK_result
+      ignore_errors: true
+      changed_when: checkJDK_result|failed
+    - name: 'jdk 체크및 확인'
+      block:
+        - command: rpm -q java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64
+          register: checkJDK_result
+          ignore_errors: true
+          changed_when: checkJDK_result|failed
+        - uri:
+            url: http://mirror.centos.org/centos/7/updates/x86_64/Packages/java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64.rpm
+            method: GET
+            dest: /tmp
+            creates: /tmp/java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64.rpm
+          changed_when: false
+        - yum:
+            name: /tmp/java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64.rpm
+            state: present
+        - alternatives:
+            path: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/jre/bin/java
+            name: java
+            link: /usr/bin/java
+        - alternatives:
+            path: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/bin/javac
+            name: javac
+            link: /usr/bin/javac
+        - file:
+            name: /tmp/java-1.8.0-openjdk-devel-1.8.0.151-1.b12.el7_4.x86_64.rpm
+            state: absent
+          changed_when: false
+      become: true
+      when: checkJDK_result|failed

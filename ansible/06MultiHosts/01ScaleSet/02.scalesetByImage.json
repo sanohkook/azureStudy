@@ -1,0 +1,109 @@
+
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "scalesetName": {
+            "type": "string"
+      },
+      "adminUserId": {
+        "type": "string"
+      },
+      "sshKeyData": {
+        "type": "string"
+      },
+      "imgRG": {
+        "type": "string"
+      },
+      "imgName": {
+          "type": "string"
+      },
+      "netRGName": {
+          "type": "string"
+      },
+      "nicName": {
+          "type": "string"
+      },
+      "vnetName": {
+          "type": "string"
+      },
+      "subnetName": {
+          "type": "string"
+      },
+      "scalesetDnsName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+        "subscriptionId":"[subscription().subscriptionId]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Compute/virtualMachineScaleSets",
+        "name": "[parameters('scalesetName')]",
+        "location": "[resourceGroup().location]",
+        "apiVersion": "2017-12-01",
+        "sku": {
+          "name": "Standard_A1",
+          "capacity": 2
+        },
+        "properties": {
+          "upgradePolicy": {
+            "mode": "Manual"
+          },
+          "virtualMachineProfile": {
+            "storageProfile": {
+              "imageReference": {
+                "id": "[concat('/subscriptions/',variables('subscriptionId'),'/resourceGroups/',parameters('imgRG'),'/providers/Microsoft.Compute/images/',parameters('imgName'))]"
+              }
+            },
+            "osProfile": {
+              "computerNamePrefix": "vm",
+              "adminUsername": "[parameters('adminUserId')]",
+              "linuxConfiguration": {
+                  "disablePasswordAuthentication": true,
+                  "ssh": {
+                      "publicKeys": [
+                          {
+                              "path": "[concat('/home/',parameters('adminUserId'),'/.ssh/authorized_keys')]",
+                              "keyData": "[parameters('sshKeyData')]"
+                          }
+                      ]
+                  }
+              }
+            },
+            "networkProfile": {
+                "networkInterfaceConfigurations": [
+                    {
+                      "name": "[parameters('nicName')]",
+                      "properties": {
+                        "primary": true,
+                        "enableAcceleratedNetworking" : false,
+                        "ipConfigurations": [
+                          {
+                            "name": "myIpConfig",
+                            "properties": {
+                              "subnet": {
+                                "id": "[concat('/subscriptions/',variables('subscriptionId'),'/resourceGroups/',parameters('netRGName'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vnetName'),'/subnets/',parameters('subnetName'))]"
+                              },
+                              "publicIPAddressconfiguration": {
+                                "name": "myset01",
+                                "properties": {
+                                "idleTimeoutInMinutes": 10,
+                                  "dnsSettings": {
+                                    "domainNameLabel": "[parameters('scalesetDnsName')]"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                ]
+            }
+          }
+        }
+      }
+    ]
+  }

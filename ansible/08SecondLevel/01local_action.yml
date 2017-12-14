@@ -1,0 +1,16 @@
+---
+- hosts: ip0*
+  tasks:
+    - name: "ip0*에서 실행되는 프로세스 개수 변수에 적어놓기"
+      shell: ps -e | wc -l
+      # register는 변수 등록하는 module
+      register: remote_processes_number
+    - name: "ip0 프로세스 개수 출력"
+      debug:
+        msg: '{{ remote_processes_number.stdout }}'
+    - name: "로칼 머신의 프로세스 개수 변수에 적어놓기"
+      local_action: shell ps -e | wc -l
+      register: local_processes_number
+    - name: "로칼 프로세스 개수 출력"
+      debug:
+        msg: '{{ local_processes_number.stdout }}'

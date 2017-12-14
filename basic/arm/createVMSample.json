@@ -1,0 +1,382 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_myVM_name": {
+            "defaultValue": "myVM",
+            "type": "String"
+        },
+        "virtualNetworks_myVMVNET_name": {
+            "defaultValue": "myVMVNET",
+            "type": "String"
+        },
+        "networkInterfaces_myVMVMNic_name": {
+            "defaultValue": "myVMVMNic",
+            "type": "String"
+        },
+        "networkSecurityGroups_myVMNSG_name": {
+            "defaultValue": "myVMNSG",
+            "type": "String"
+        },
+        "publicIPAddresses_myVMPublicIP_name": {
+            "defaultValue": "myVMPublicIP",
+            "type": "String"
+        },
+        "subnets_myVMSubnet_name": {
+            "defaultValue": "myVMSubnet",
+            "type": "String"
+        },
+        "securityRules_default_allow_ssh_name": {
+            "defaultValue": "default-allow-ssh",
+            "type": "String"
+        },
+        "virtualMachines_myVM_id": {
+            "defaultValue": "/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Compute/disks/myVM_OsDisk_1_539d96c7142e43648773a5ba6787711d",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Compute/virtualMachines/myVM'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_myVM_name')]",
+            "apiVersion": "2017-03-30",
+            "location": "KoreaCentral",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS1_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_myVM_name'),'_OsDisk_1_539d96c7142e43648773a5ba6787711d')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('virtualMachines_myVM_id')]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_myVM_name')]",
+                    "adminUsername": "minsoojo",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/minsoojo/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCXyIbHF/Vo1/4UmgH4NGql2+6riwr3kzoLjgNvoPmUE0fTgUz5ceBgY+4Vb1UCXauf6kQulNUCbCoDGA42aoZOz+pHGWD0TgRtdhYEQ/I+AMnUsH7MfzFjk08oA1iqV8vAb5/fSZY6BZBXrC063SR0InbtMD0F0QrD9gf8pDMDZtRD/ESUd40XvNv/z5MivEdDtuWf4pST7fxVtWabTcoC5sCXqix7F/oX+BbAqx03nFMt12WQKzmOBchnTdyeAsSP9XD5R1Hq3m70DbmAz+z5eaulw+eUW8jzE6kEWnZgzs91T8PXBvGa2am3AF4IrR5RxUEhAwWN+QXsa2fusKgH62z/SNYpSa4AJDBeYYluentRjvfS+U95f/m4HXzeI+E/F+FZmLvdLD88Ty6AAbX19qfufXPp+BkeL1aUPT3V7V7w9fXb9cBi3b7J6KtnaMbAVBZcklPjeR9VsfHY7uJtUJ+jrwd/4JfTLVDTXQZxYFgsI98RsigEpiW0lbFWo3xn3zZfrtgO2KFiQLDvICb87WHguf7k42fCy2nIX5V6EnJlUZiLg/JxjPDcSzdemmxSPtZzDYmMnyJwP3V2dUN71wPP7oSl5JJngG6EYiZ2xqwOw86A2iJ28AdVw3NflVX5qYS/7iZH1W0kVP26FuimZkqa9rufNrLwm3QmJym0cQ== minscho@ebay.com\n"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_myVMVMNic_name'))]"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_myVMVMNic_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/networkInterfaces/myVMVMNic'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_myVMVMNic_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "koreacentral",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "2cdd5054-5571-4b91-88f5-37e515138045",
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfigmyVM",
+                        "etag": "W/\"e29e11fe-fbcf-4aee-a43e-a4a1b3717547\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_myVMPublicIP_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_myVMVNET_name'), parameters('subnets_myVMSubnet_name'))]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": [],
+                    "appliedDnsServers": [],
+                    "internalDomainNameSuffix": "c4z1ytq5fbzubc2oryfhqy4xub.syx.internal.cloudapp.net"
+                },
+                "macAddress": "00-22-48-05-0B-E4",
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_myVMNSG_name'))]"
+                },
+                "primary": true,
+                "virtualMachine": {
+                    "id": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_myVM_name'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_myVMPublicIP_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_myVMVNET_name'), parameters('subnets_myVMSubnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_myVMNSG_name'))]",
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_myVM_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/networkSecurityGroups/myVMNSG'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_myVMNSG_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "koreacentral",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "d567b6fd-a405-4964-910b-274520bc1e40",
+                "securityRules": [
+                    {
+                        "name": "default-allow-ssh",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ],
+                "defaultSecurityRules": [
+                    {
+                        "name": "AllowVnetInBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow inbound traffic from all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowAzureLoadBalancerInBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow inbound traffic from azure load balancer",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllInBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Deny all inbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowVnetOutBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowInternetOutBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow outbound traffic from all VMs to Internet",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "Internet",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllOutBound",
+                        "etag": "W/\"77ad398a-17e8-428f-97f1-0ff806ffcede\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Deny all outbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/publicIPAddresses/myVMPublicIP'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_myVMPublicIP_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "koreacentral",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "f2db4b12-7c0e-4dc9-aaa5-e0a67e8c63f7",
+                "ipAddress": "52.231.36.100",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/virtualNetworks/myVMVNET'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_myVMVNET_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "koreacentral",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "4ebcb317-281f-4073-8b8e-8e0a7863d7a1",
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "myVMSubnet",
+                        "etag": "W/\"09de9e35-4651-437a-80e4-5cb567e024d4\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": []
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/networkSecurityGroups/myVMNSG/securityRules/default-allow-ssh'.",
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "name": "[concat(parameters('networkSecurityGroups_myVMNSG_name'), '/', parameters('securityRules_default_allow_ssh_name'))]",
+            "apiVersion": "2017-06-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "protocol": "Tcp",
+                "sourcePortRange": "*",
+                "destinationPortRange": "22",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 1000,
+                "direction": "Inbound",
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_myVMNSG_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/7b13dc94-2b54-4cdf-a247-bbdebdb97f4f/resourceGroups/myResourceGroupVM/providers/Microsoft.Network/virtualNetworks/myVMVNET/subnets/myVMSubnet'.",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(parameters('virtualNetworks_myVMVNET_name'), '/', parameters('subnets_myVMSubnet_name'))]",
+            "apiVersion": "2017-06-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_myVMVNET_name'))]"
+            ]
+        }
+    ]
+}

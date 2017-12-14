@@ -1,0 +1,9 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - libssl-dev
+  - libffi-dev
+  - python-dev
+  - python-pip
+runcmd:
+  - pip install ansible[azure]

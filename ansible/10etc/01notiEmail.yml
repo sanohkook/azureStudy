@@ -1,0 +1,15 @@
+- hosts: ip0* 
+  tasks: 
+    - name: Read the machine uptime 
+      command: uptime -p 
+      register: uptime 
+    - name: Send the uptime via e-mail 
+      mail: 
+        host: smtp.office365.com 
+        port: 587
+        secure: starttls
+        username: minscho@ebay.com 
+        password: Angel12345% 
+        to: minscho@ebay.com 
+        subject: Ansible-report 
+        body: 'Local system uptime is {{ uptime.stdout }}.' 

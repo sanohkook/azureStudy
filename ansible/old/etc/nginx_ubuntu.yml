@@ -1,0 +1,13 @@
+# Initial task definition 
+---
+tasks:
+    - name: Can we use Ansible to Install nginx web server
+      apt: pkg=nginx state=installed update_cache=true
+
+# Same task using the scalar folded approach to task definitions
+tasks:     
+    - name: Can we use Ansible to Install nginx web server       
+      apt: >
+        pkg=nginx 
+        state=installed 
+        update_cache=true

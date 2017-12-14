@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: "libselinux-python 설치"
+      yum:
+        name: libselinux-python
+        state: present
+      become: true
+    - name: "libsemanage-python 설치.. 뭔지 모름"
+      yum:
+        name: libsemanage-python
+        state: present
+      become: true

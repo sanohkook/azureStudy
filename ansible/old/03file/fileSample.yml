@@ -1,0 +1,23 @@
+# Create a directory using an Ansible Task
+---
+- hosts: all
+  tasks:
+  - name: Creates a directory
+    file: 
+      path: /opt/myconfiguration.conf
+      owner: bob
+      group: admin
+      mode: 0644
+#
+#- name: Creates a directory
+#  file: path=/opt/helloWorld state=directory
+#
+#- name: Creates directory
+#  file: path=/opt/helloWorld state=directory owner=baseballplayers group=baseballplayers mode=0775
+#
+#- name:
+#    file:
+#      path: /opt/myconfiguration.conf
+#      owner: bob
+#      group: admin
+#      mode: 0644

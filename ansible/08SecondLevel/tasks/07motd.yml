@@ -1,0 +1,12 @@
+---
+- name: "변수 입력테스트"
+  debug:
+    msg: '{{ var1 }}'
+- name: "MOTD 바꾸기"
+  template:
+    src: 07motd
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
+  become: true

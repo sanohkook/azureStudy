@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vm_name": {
+            "type": "string"
+        },
+        "disk_name": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "테스트용",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vm_name')]",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "storageProfile": {
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "[parameters('disk_name')]",
+                            "createOption": "Attach",
+                            "managedDisk": {
+                                "id": "[resourceId('Microsoft.Compute/disks/', parameters('disk_name'))]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

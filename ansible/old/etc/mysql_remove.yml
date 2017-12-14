@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: mysql 삭제
+    yum:
+      name: mysql57-community-release.noarch
+      state: removed
+    become: true

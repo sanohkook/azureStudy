@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: "deprovision vm"
+      command: waagent -force -deprovision
+      become: true

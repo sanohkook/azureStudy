@@ -1,0 +1,11 @@
+- hosts: localhost 
+  tasks: 
+  - name: Install Apache 
+    yum: 
+      name: httpd 
+      state: present 
+  - name: Enable Apache 
+  service: 
+      name: httpd 
+      state: running 
+      enabled: True

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name : "hostname을 dns host명과 일치시킴"
+      hostname:
+        name: "{{ inventory_hostname }}"
+      become: true

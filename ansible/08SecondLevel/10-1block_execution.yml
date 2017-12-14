@@ -1,0 +1,13 @@
+---
+- hosts: ip0*
+  tasks:
+    - name: Apache 설치
+      block:
+        - yum: name={{ item }} state=installed
+          with_items:
+            - httpd
+            - memcached
+        - template: src=templates/src.j2 dest=/etc/foo.conf
+        - service: name=bar state=started enabled=True
+      when: ansible_distribution == 'CentOS'
+      become: true

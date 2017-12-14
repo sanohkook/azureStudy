@@ -1,0 +1,45 @@
+---
+- hosts: webserver
+  tasks:
+    - name: "Apache 설치"
+      yum:
+        name: httpd
+        state: present
+      become: true
+    - name: "Apache 시작"
+      service:
+        name: httpd
+        state: started
+        enabled: "{{ https_enabled }}"
+      become: true
+    - name: "http firewall해제"
+      firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+      become: true
+    - name: "https firewall해제"
+      firewalld:
+        service: https
+        state: enabled
+        permanent: true
+        immediate: true
+      become: true
+#    - name: "webserver용 security group 생성"
+#      azure_rm_securitygroup:
+#        resource_group: minschoNetRG
+#        name: WebServerSG
+#        rules:
+#          - name: Allow_SSH
+#            protocol: Tcp
+#            destination_port_range: 22
+#            access: Allow
+#            priority: 101
+#            direction: Inbound
+#          - name: Allow_HTTPS
+#            protocol: Tcp
+#            destination_port_range: 443
+#            access: Allow
+#            priority: 102
+#            direction: Inbound

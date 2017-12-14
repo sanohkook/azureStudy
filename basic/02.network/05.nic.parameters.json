@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "nic_name": {
+            "value": "nic_test1"
+        },
+        "pubip_name": {
+            "value": "pubip_test1"
+        },
+        "vnet_name": {
+            "value": "myVnet"
+        },
+        "subnet_name": {
+            "value": "mySubnet"
+        },
+        "nsg_name": {
+            "value": "DefaultNSG"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: "모두 update하자"
+      yum:
+        name: "*"
+        state: latest
+      become: true
